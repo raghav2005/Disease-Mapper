@@ -22,5 +22,28 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# dependencies
+disease-mapper/node_modules/
+disease-mapper/.pnp
+disease-mapper/.pnp.js
+
+# testing
+disease-mapper/coverage
+
+# production
+disease-mapper/build
+
+# misc
+disease-mapper/.DS_Store
+disease-mapper/.env.local
+disease-mapper/.env.development.local
+disease-mapper/.env.test.local
+disease-mapper/.env.production.local
+
+disease-mapper/npm-debug.log*
+disease-mapper/yarn-debug.log*
+disease-mapper/yarn-error.log*
+
+    
 disease-mapper/node_modules/
 venv/
