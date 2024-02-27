@@ -1,11 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-       <p>disease mapper</p>
+       <p>Disease Mapper</p>
       </header>
     </div>
   );
