@@ -8,16 +8,11 @@ load_dotenv()
 app = Flask(__name__)
 
 # MySQL setup
-# app.config["MYSQL_HOST"] = "localhost"
-# app.config["MYSQL_USER"] = "root"
-# app.config["MYSQL_PASSWORD"] = "root"
-# app.config["MYSQL_DB"] = "disease_mapper_db"
-# print(app.config)
 config = {
     "user": "root",
-    "password": "root",
+    "password": os.getenv("REACT_APP_MYSQL_PASSWORD"),
     "host": "localhost",
-    "unix_socket": "/Applications/MAMP/tmp/mysql/mysql.sock",
+    "unix_socket": os.getenv("REACT_APP_UNIX_SOCKET"),
     "database": "disease_mapper_db",
     "raise_on_warnings": True,
 }
@@ -33,9 +28,6 @@ cnx = mysql.connector.connect(**config)
 @cross_origin() # Remove in production
 def search():
     print('helloooo')
-    # data = request.get_json()
-    # test1 = data["test1"]
-    # test2 = data["test2"]
     # cursor = cnx.cursor(dictionary=True)
     # cursor.execute(
     #     """ CREATE TABLE Users (
