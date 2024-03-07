@@ -17,7 +17,6 @@ config = {
     "raise_on_warnings": True,
 }
 
-
 # Remove in production. This is for dev (same origin server) only.
 app.config["CORS_HEADERS"] = "Content-Type"
 cors = CORS(app)
@@ -41,7 +40,6 @@ def search():
     # # cursor.execute(""" INSERT INTO QUERY VALUES(%s,%s)""", (test1, test2))
     # cnx.close()
     return {"status": "SUCCESS", "message": "test message"}
-
 
 @app.route('/', defaults = {"path": ""})
 def test(path):
