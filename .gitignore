@@ -47,3 +47,5 @@ disease-mapper/yarn-error.log*
     
 disease-mapper/node_modules/
 venv/
+
+.env
