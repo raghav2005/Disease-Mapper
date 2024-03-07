@@ -56,4 +56,4 @@ def test(path):
     return "Hello World"
 
 if __name__ == "__main__":
-    app.run(debug = True, host = "localhost", port = os.getenv("FLASK_PORT"))
+    app.run(debug = True, host = "localhost", port = os.getenv("REACT_APP_FLASK_PORT"))

@@ -1,10 +1,8 @@
-// import logo from './logo.svg';
 import Button from 'react-bootstrap/Button';
 import './App.css';
-// import { useEffect } from 'react';
-// import 'dotenv/config';
+
 const search = async () => {
-    const response = await fetch("http://localhost:3001/search", {
+    const response = await fetch("http://localhost:" + process.env.REACT_APP_FLASK_PORT + "/search", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: "HI"
