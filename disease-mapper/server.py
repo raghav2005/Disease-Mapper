@@ -28,15 +28,6 @@ cnx = mysql.connector.connect(**config)
 def search():
     print('helloooo')
     # cursor = cnx.cursor(dictionary=True)
-    # cursor.execute(
-    #     """ CREATE TABLE Users (
-    #         userID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    #         username varchar(255) NOT NULL,
-    #         password varchar(255) NOT NULL,
-    #         NHSID varchar(255) NOT NULL,
-    #         postcode varchar(255) NOT NULL
-    #     )"""
-    # )
     # # cursor.execute(""" INSERT INTO QUERY VALUES(%s,%s)""", (test1, test2))
     # cnx.close()
     return {"status": "SUCCESS", "message": "test message"}
@@ -44,6 +35,17 @@ def search():
 @app.route('/', defaults = {"path": ""})
 def test(path):
     return "Hello World"
+
+@app.route('/registerUser', methods = ["POST"])
+@cross_origin()
+def registerUser():
+    cursor = cnx.cursor(dictionary=True)
+    data = request.get_json()
+    cursor.execute(""" INSERT INTO USERS (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], data['password'], data['email'], data['NHSID'], data['postcode']))
+    cnx.commit()
+    cursor.close()
+    return {"status": "SUCCESS", "message": "test message"}
+
 
 if __name__ == "__main__":
     app.run(debug = True, host = "localhost", port = os.getenv("REACT_APP_FLASK_PORT"))
