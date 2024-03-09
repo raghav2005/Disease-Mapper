@@ -25,14 +25,14 @@ cors = CORS(app)
 
 cnx = mysql.connector.connect(**config)
 
-@app.route("/search", methods=["POST"])
-@cross_origin() # Remove in production
-def search():
-    print('helloooo')
-    # cursor = cnx.cursor(dictionary=True)
-    # # cursor.execute(""" INSERT INTO QUERY VALUES(%s,%s)""", (test1, test2))
-    # cnx.close()
-    return {"status": "SUCCESS", "message": "test message"}
+# @app.route("/search", methods=["POST"])
+# @cross_origin() # Remove in production
+# def search():
+#     print('helloooo')
+#     # cursor = cnx.cursor(dictionary=True)
+#     # # cursor.execute(""" INSERT INTO QUERY VALUES(%s,%s)""", (test1, test2))
+#     # cnx.close()
+#     return {"status": "SUCCESS", "message": "test message"}
 
 @app.route('/', defaults = {"path": ""})
 def test(path):
@@ -43,10 +43,40 @@ def test(path):
 def registerUser():
     cursor = cnx.cursor(dictionary=True)
     data = request.get_json()
-    cursor.execute(""" INSERT INTO USERS (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], bcrypt.generate_password_hash(data['password']).decode('utf-8'), data['email'], data['NHSID'], data['postcode']))
-    cnx.commit()
+
+    cursor.execute("SELECT * FROM Users WHERE username = %s", (data["username"],))
+    result = cursor.fetchall()
+
+    if len(result) > 0:
+        print("username already exists")
+        return {"status": "FAILURE", "message": "test message"}
+    else:
+        cursor.execute(""" INSERT INTO Users (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], bcrypt.generate_password_hash(data['password']).decode('utf-8'), data['email'], data['NHSID'], data['postcode']))
+        cnx.commit()
+
+        cursor.close()
+        print("created new user")
+        return {"status": "SUCCESS", "message": "test message"}
+
+@app.route('/loginUser', methods = ["POST"])
+@cross_origin()
+def loginUser():
+    cursor = cnx.cursor(dictionary=True)
+    data = request.get_json()
+
+    cursor.execute("SELECT * FROM Users WHERE username = %s", (data['username'],))
+    result = cursor.fetchall()
+    print(result)
+
+    password_valid = bcrypt.check_password_hash(result[0]['password'], data['password'])
     cursor.close()
-    return {"status": "SUCCESS", "message": "test message"}
+
+    if password_valid:
+        print("valid password")
+        return {"status": "SUCCESS", "message": "test message"}
+    else:
+        print("incorrect password")
+        return {"status": "FAILURE", "message": "test message"}
 
 
 if __name__ == "__main__":

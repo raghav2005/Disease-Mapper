@@ -1,6 +1,6 @@
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import React from 'react';
-import { BrowserRouter, Routes, Route, Router, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 
 import './App.css';
@@ -10,15 +10,16 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import Register from "./register.js";
+import Login from "./login.js";
 
-const search = async () => {
-    const response = await fetch("http://localhost:" + process.env.REACT_APP_FLASK_PORT + "/search", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: "hello"
-    });
-    return response;
-}
+// const search = async () => {
+//     const response = await fetch("http://localhost:" + process.env.REACT_APP_FLASK_PORT + "/search", {
+//         method: "POST",
+//         headers: { "content-type": "application/json" },
+//         body: "hello"
+//     });
+//     return response;
+// }
 
 function Aux() {
     return (
@@ -62,6 +63,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Aux />}/>
                 <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
                 {/* <Route path="blogs" element={<Blogs />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="*" element={<NoPage />} /> */}
