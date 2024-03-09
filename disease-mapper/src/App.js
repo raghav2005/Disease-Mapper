@@ -32,7 +32,7 @@ function Aux() {
                     </Nav>
                     <Nav className="me-auto" id='right_side_navbar'>
                         <Link to="/register" className="nav-link">Register</Link>
-                        <Nav.Link href="#TODO" className="nav-link">Login</Nav.Link>
+                        <Nav.Link href="/login" className="nav-link">Login</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

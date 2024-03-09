@@ -1,11 +1,13 @@
 import os
 from flask import Flask, render_template, request
+from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 import mysql.connector
 from flask_cors import CORS, cross_origin
 
 load_dotenv()
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # MySQL setup
 config = {
@@ -34,14 +36,14 @@ def search():
 
 @app.route('/', defaults = {"path": ""})
 def test(path):
-    return "Hello World"
+    return "This is the Flask Root Directory. Go to http://localhost:3000"
 
 @app.route('/registerUser', methods = ["POST"])
 @cross_origin()
 def registerUser():
     cursor = cnx.cursor(dictionary=True)
     data = request.get_json()
-    cursor.execute(""" INSERT INTO USERS (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], data['password'], data['email'], data['NHSID'], data['postcode']))
+    cursor.execute(""" INSERT INTO USERS (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], bcrypt.generate_password_hash(data['password']).decode('utf-8'), data['email'], data['NHSID'], data['postcode']))
     cnx.commit()
     cursor.close()
     return {"status": "SUCCESS", "message": "test message"}
