@@ -21,11 +21,12 @@ export const usernameContext = React.createContext();
 // }
 
 function Aux() {
+    const {username} = React.useContext(usernameContext);
     return (
         <div className='App'>
             <NavBar/>
             <br />
-            
+            {username}
             {/* The map container must have a defined height, ensure this is set in your CSS */}
             <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false} style={{ height: "400px" }}>
                 <TileLayer
