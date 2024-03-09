@@ -12,6 +12,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Register from "./register.js";
 import Login from "./login.js";
 
+export const usernameContext = React.createContext();
 // const search = async () => {
 //     const response = await fetch("http://localhost:" + process.env.REACT_APP_FLASK_PORT + "/search", {
 //         method: "POST",
@@ -56,20 +57,23 @@ function Aux() {
 }
 
 function App() {
+    const [username, setUsername] = React.useState("");
   // Ensure everything you want to render is inside the return statement
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Aux />}/>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                {/* <Route path="blogs" element={<Blogs />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="*" element={<NoPage />} /> */}
-    
-            </Routes>
-        </BrowserRouter>
+        <usernameContext.Provider value={{ username, setUsername }}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Aux />}/>
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    {/* <Route path="blogs" element={<Blogs />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="*" element={<NoPage />} /> */}
+        
+                </Routes>
+            </BrowserRouter>
+        </usernameContext.Provider>
     );
 }
 

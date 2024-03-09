@@ -15,7 +15,11 @@ const registerUser = async (username, email, NHSID, postcode, password) => {
         body: JSON.stringify({username, password, email, NHSID, postcode})
     });
     const data = await response.json();
-    console.log(data);
+    if (data.status === 'SUCCESS') {
+        alert("User registered successfully");
+        return;
+    }
+    alert("User registration failed");
     return data;
 }
 
