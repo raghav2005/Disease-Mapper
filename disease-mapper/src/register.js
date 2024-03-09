@@ -1,10 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import { Link } from "react-router-dom";
-
+import NavBar from "./index.js";
 
 const registerUser = async (username, email, NHSID, postcode, password) => {
     const response = await fetch('http://localhost:' + process.env.REACT_APP_FLASK_PORT + '/registerUser', {
@@ -32,19 +28,7 @@ function Register() {
 
     return(
         <div className = 'App'>
-            <Navbar bg="dark" data-bs-theme="dark">
-                <Container>
-                    <Navbar.Brand href="/">Disease Mapper</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Link to="/" className="nav-link">Home</Link>
-                        <Nav.Link href="#TODO" className="nav-link">Report</Nav.Link>
-                    </Nav>
-                    <Nav className="me-auto" id='right_side_navbar'>
-                        <Link to="/register" className="nav-link">Register</Link>
-                        <Nav.Link href="/login" className="nav-link">Login</Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
+            <NavBar />
             <br />
 
             <h1> REGISTER UR DETAILS </h1>
