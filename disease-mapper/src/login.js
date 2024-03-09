@@ -16,7 +16,7 @@ const loginUser = async (username, password, navigate, setUsername) => {
     const data = await response.json();
     if (data.status === 'SUCCESS') {
         alert("User logged in successfully");
-        navigate('/home');
+        navigate('/report'); // TODO: CHANGE BACK TO /home after fixing username transferred from home to report & back!
     } else {
         alert("User log in failed");
         setUsername('');

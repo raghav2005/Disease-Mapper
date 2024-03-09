@@ -21,7 +21,7 @@ function NavBar() {
                 <Navbar.Brand href="/home">Disease Mapper</Navbar.Brand>
                 <Nav className="me-auto">
                     <Link to="/home" className="nav-link">Home</Link>
-                    <Nav.Link href="#TODO" className="nav-link">Report</Nav.Link>
+                    <Nav.Link href="/report" className="nav-link">Report</Nav.Link>
                 </Nav>
                 <Nav className="me-auto" id='right_side_navbar'>
                     <Link to="/register" className="nav-link">Register</Link>

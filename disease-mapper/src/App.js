@@ -1,7 +1,7 @@
 // import Button from 'react-bootstrap/Button';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import  Report  from "./report.js";
 import './App.css';
 import 'leaflet/dist/leaflet.css'; // Make sure to import the Leaflet CSS
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -19,6 +19,8 @@ export const usernameContext = React.createContext();
 //     });
 //     return response;
 // }
+
+// TODO: CHANGE BACK TO / home after fixing username transferred from home to report & back!
 
 function Aux() {
     const {username} = React.useContext(usernameContext);
@@ -54,6 +56,7 @@ function App() {
                     <Route path="/" element={<Login />}/>
                     <Route path="/register" element={<Register />} />
                     <Route path="/home" element={<Aux />} />
+                    <Route path="/report" element={<Report />} />
                     {/* <Route path="blogs" element={<Blogs />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="*" element={<NoPage />} /> */}

@@ -79,5 +79,29 @@ def loginUser():
         return {"status": "FAILURE", "message": "test message"}
 
 
+@app.route("/sendReport", methods=["POST"])
+@cross_origin()
+def sendReport():
+    cursor = cnx.cursor(dictionary=True)
+    data = request.get_json()
+
+    cursor.execute("SELECT * FROM Diseases WHERE diseaseName = %s", (data["diseaseName"],))
+    result = cursor.fetchall()
+    print(result)
+
+    if len(result) > 0:
+        pass
+    else:        
+        cursor.execute(""" INSERT INTO Diseases (diseaseID) VALUES (%s) """, (data['diseaseName'], ))
+        cnx.commit()
+
+    cursor.execute(""" INSERT INTO UsersDiseased (userID, diseaseID) VALUES ((SELECT userID FROM Users WHERE username = %s),(SELECT diseaseID from Diseases WHERE diseaseName = %s))""", (data['username'], data["diseaseName"]))
+    cnx.commit()
+
+    cursor.close()
+    print("user disease added")
+    return {"status": "SUCCESS", "message": "test message"}
+
+
 if __name__ == "__main__":
     app.run(debug = True, host = "localhost", port = os.getenv("REACT_APP_FLASK_PORT"))
