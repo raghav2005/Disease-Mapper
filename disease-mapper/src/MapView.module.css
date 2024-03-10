@@ -2,35 +2,4 @@
 .mapContainer {
     height: calc(100vh - 56px); /* NavBar height is 56px */
     width: 100%;
-    position: relative;
-}
-
-.controls {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-}
-
-.diseaseSelect {
-    padding: 5px;
-    margin-bottom: 5px;
-    width: 200px;
-    height: 150px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.multiDiseaseCheckbox {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-}
-
-.multiDiseaseCheckbox input[type='checkbox'] {
-    margin-right: 5px;
 }
