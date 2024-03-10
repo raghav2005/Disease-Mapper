@@ -26,6 +26,25 @@ const Register = () => {
     const registerUser = async () => {
         if (!validateFields()) return; // Stop the registration process if validation fails
 
+        var FHIR_data = {
+            "resourceType": "Patient",
+            "id": nhsID,
+            "text": null,
+            "identifier": null,
+            "active": true,
+            "name": username,
+            "telecom": email,
+            "gender": null,
+            "birthDate": null,
+            "_birthDate": null,
+            "deceasedBoolean": false,
+            "address": postcode,
+            "contact": email,
+            "managingOrganization": {
+                "reference": "Disease Mapper & Co."
+            }
+        };
+
         try {
             const response = await fetch(
                 `http://localhost:${process.env.REACT_APP_FLASK_PORT}/registerUser`,
@@ -38,7 +57,7 @@ const Register = () => {
                         username,
                         email,
                         nhsID: nhsID,
-                        postcode,
+                        FHIR_data,
                         password,
                     }),
                 }

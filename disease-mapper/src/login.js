@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import styles from './Login.module.css';
-import stylesBig from './index.module.css';
 
 const Login = () => {
     const { setUser } = useContext(UserContext);

@@ -43,7 +43,7 @@ def registerUser():
 
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
     cursor.execute("""INSERT INTO Users (username, password, email, nhsID, postcode) VALUES (%s,%s,%s,%s,%s)""",
-                   (data['username'], hashed_password, data['email'], data['nhsID'], data['postcode']))
+                   (data['username'], hashed_password, data['email'], data['nhsID'], data['FHIR_data']['address']))
     cnx.commit()
     cursor.close()
 
@@ -55,7 +55,7 @@ def registerUser():
             "username": data['username'],
             "email": data['email'],
             "nhsID": data['nhsID'],
-            "postcode": data['postcode']
+            "postcode": data['FHIR_data']['address']
         }
     }
 

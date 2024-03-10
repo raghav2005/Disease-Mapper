@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import styles from './Report.module.css';
 
@@ -6,6 +7,7 @@ const Report = () => {
     const { user } = useContext(UserContext);
     const [disease, setDisease] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const sendReport = async () => {
         if (!user) {
@@ -37,6 +39,9 @@ const Report = () => {
             if (data.status === 'SUCCESS') {
                 alert('Report submitted successfully');
                 setDisease('');
+                // Navigate to the map page
+                navigate('/map');
+
             } else {
                 alert(`Failed to submit report: ${data.message}`);
             }
