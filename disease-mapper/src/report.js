@@ -2,7 +2,6 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from './UserContext';
 import styles from './Report.module.css';
-import stylesBig from './index.module.css';
 
 const Report = () => {
     const { user } = useContext(UserContext);

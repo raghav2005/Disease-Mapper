@@ -37,12 +37,3 @@
     }
 }
 
-.inputError {
-    border-color: red; /* Highlights the border in red if there's an error */
-  }
-  
-  /* Placeholder color for error messages */
-  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-    opacity: 1; /* Firefox */
-  }

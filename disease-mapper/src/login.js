@@ -10,17 +10,30 @@ const Login = () => {
         username: '',
         password: '',
     });
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState({
+        username: '',
+        password: '',
+    });
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLoginDetails((prevState) => ({ ...prevState, [name]: value }));
         // Clear error message when user starts typing again
-        if (error) setError('');
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+    };
+
+    const validateFields = () => {
+        const newErrors = {};
+        if (!loginDetails.username.trim()) newErrors.username = "This field is required...";
+        if (!loginDetails.password.trim()) newErrors.password = "This field is required...";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Returns true if no errors
     };
 
     const loginUser = async () => {
+        if (!validateFields()) return; // Stop the login process if validation fails
+
         try {
             const response = await fetch(
                 'http://localhost:' + process.env.REACT_APP_FLASK_PORT + '/loginUser',
@@ -40,37 +53,43 @@ const Login = () => {
                 });
                 navigate('/');
             } else {
-                setError('Incorrect username or password');
+                setErrors((prevErrors) => ({ ...prevErrors, general: 'Incorrect username or password' }));
             }
         } catch (error) {
             console.error('Login failed:', error);
-            setError('Login request failed. Please try again.');
+            setErrors((prevErrors) => ({ ...prevErrors, general: 'Login request failed. Please try again.' }));
         }
     };
 
     return (
-        <div className={stylesBig.App}>
+        <div className={styles.login}>
             <h1>Login</h1>
-            {error && <div className={styles.errorMessage}>{error}</div>}
-            <input
-                className={styles.input}
-                type="text"
-                name="username"
-                value={loginDetails.username}
-                placeholder="Username"
-                onChange={handleChange}
-            />
-            <input
-                className={styles.input}
-                type="password"
-                name="password"
-                value={loginDetails.password}
-                placeholder="Password"
-                onChange={handleChange}
-            />
-            <button className={styles.button} onClick={loginUser}>
-                Login
-            </button>
+            {errors.general && <div className={styles.errorMessage}>{errors.general}</div>}
+            <div className={styles.inputContainer}>
+                <label htmlFor="username">Username</label>
+                <input
+                    className={`${styles.input} ${errors.username ? styles.inputError : ''}`}
+                    type="text"
+                    name="username"
+                    id="username"
+                    value={loginDetails.username}
+                    placeholder={errors.username}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className={styles.inputContainer}>
+                <label htmlFor="password">Password</label>
+                <input
+                    className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={loginDetails.password}
+                    placeholder={errors.password}
+                    onChange={handleChange}
+                />
+            </div>
+            <button className={styles.button} onClick={loginUser}>Login</button>
         </div>
     );
 };
