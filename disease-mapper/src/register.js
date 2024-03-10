@@ -53,63 +53,31 @@ const Register = () => {
     };
 
     return (
-        <div className={[styles.register]}>
+        <div className={styles.register}>
             <h1>Register Your Details</h1>
-            <div className={styles.inputContainer}>
-                <label htmlFor="username">Username *</label>
-                <input
-                    className={styles.input}
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className={styles.inputContainer}>
-                <label htmlFor="email">Email *</label>
-                <input
-                    className={styles.input}
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className={styles.inputContainer}>
-                <label htmlFor="nhsID">NHS ID</label>
-                <input
-                    className={styles.input}
-                    type="text"
-                    id="nhsID"
-                    value={nhsID}
-                    onChange={(e) => setNhsID(e.target.value)}
-                />
-            </div>
-            <div className={styles.inputContainer}>
-                <label htmlFor="postcode">Postcode *</label>
-                <input
-                    className={styles.input}
-                    type="text"
-                    id="postcode"
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value)}
-                />
-            </div>
-            <div className={styles.inputContainer}>
-                <label htmlFor="password">Password *</label>
-                <input
-                    className={styles.input}
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <button className={styles.button} onClick={registerUser}>
-                Register
-            </button>
+            {[
+                { label: "Username *", type: "text", id: "username", value: username, onChange: setUsername },
+                { label: "Email *", type: "email", id: "email", value: email, onChange: setEmail },
+                { label: "NHS ID", type: "text", id: "nhsID", value: nhsID, onChange: setNhsID, optional: true },
+                { label: "Postcode *", type: "text", id: "postcode", value: postcode, onChange: setPostcode },
+                { label: "Password *", type: "password", id: "password", value: password, onChange: setPassword },
+            ].map((field, index) => (
+                <div key={index} className={styles.inputContainer}>
+                    <label htmlFor={field.id}>{field.label}</label>
+                    <input
+                        className={styles.input}
+                        type={field.type}
+                        id={field.id}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        required={!field.optional}
+                    />
+                </div>
+            ))}
+            <button className={styles.button} onClick={registerUser}>Register</button>
         </div>
     );
+    
 };
 
 export default Register;

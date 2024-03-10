@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './MapView.module.css';
-import stylesBig from './index.module.css';
 
 const geocodePostcode = async (postcode) => {
     const apiKey = 'a91dccc858f4456c953c3474b683b77e';
@@ -32,7 +31,7 @@ const MapView = () => {
     useEffect(() => {
         const fetchAndGeocodeReports = async () => {
             try {
-                const response = await fetch('http://localhost:5000/getDiseaseReports');
+                const response = await fetch(`http://localhost:${process.env.REACT_APP_FLASK_PORT}/getDiseaseReports`);
                 const { status, data } = await response.json();
                 if (status === 'SUCCESS') {
                     const geocodedReports = await Promise.all(

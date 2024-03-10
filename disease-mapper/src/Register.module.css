@@ -1,27 +1,41 @@
 /* Register.module.css */
 .register {
-    display: flex;
-    flex-direction: column;
-    background-color: #000000;
-    color: whitesmoke;
-    align-items: center;
-    font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
-    justify-content: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5; /* Lighter background for a modern look */
+  color: #333; /* Dark gray text for better readability */
+  align-items: center;
+  font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.inputContainer {
+  margin-bottom: 20px; /* Increase spacing between fields */
 }
 
 .input {
-    margin: 8px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 100%; /* Full width inputs */
+  margin-top: 8px; /* Space between label and input */
+  padding: 12px 15px; /* Increased padding for a larger click area */
+  border: 1px solid #ccc; /* Subtle border */
+  border-radius: 8px; /* Rounded corners for inputs */
+  box-sizing: border-box; /* Correct box sizing */
 }
 
 .button {
-    background-color: #005f73;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #007bff; /* Vibrant button color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* Rounded corners for the button */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for button interaction */
+  font-weight: bold; /* Bold font for the button */
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade on hover for interaction feedback */
 }

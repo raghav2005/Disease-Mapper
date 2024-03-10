@@ -127,6 +127,7 @@ def getDiseaseReports():
     """
     cursor.execute(query)
     results = cursor.fetchall()
+    print(results)
     cursor.close()
     
     return {"status": "SUCCESS", "data": results}

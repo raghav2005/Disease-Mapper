@@ -1,6 +1,6 @@
 /* NavBar.module.css */
 .navbar {
-    background-color: #3e3e3e;
+    background-color: rgb(39, 94, 113);
     padding: 20px;
     font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
     color: whitesmoke;
@@ -18,5 +18,5 @@
 
 .link:hover,
 .brand:hover {
-    color: #e63946;
+    color: #000000;
 }
