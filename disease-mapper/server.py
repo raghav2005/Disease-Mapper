@@ -25,20 +25,11 @@ cors = CORS(app)
 
 cnx = mysql.connector.connect(**config)
 
-# @app.route("/search", methods=["POST"])
-# @cross_origin() # Remove in production
-# def search():
-#     print('helloooo')
-#     # cursor = cnx.cursor(dictionary=True)
-#     # # cursor.execute(""" INSERT INTO QUERY VALUES(%s,%s)""", (test1, test2))
-#     # cnx.close()
-#     return {"status": "SUCCESS", "message": "test message"}
-
 @app.route('/', defaults = {"path": ""})
 def test(path):
     return "This is the Flask Root Directory. Go to http://localhost:3000"
 
-@app.route('/registerUser', methods = ["POST"])
+@app.route('/registerUser', methods=["POST"])
 @cross_origin()
 def registerUser():
     cursor = cnx.cursor(dictionary=True)
@@ -48,17 +39,28 @@ def registerUser():
     result = cursor.fetchall()
 
     if len(result) > 0:
-        print("username already exists")
-        return {"status": "FAILURE", "message": "test message"}
-    else:
-        cursor.execute(""" INSERT INTO Users (username, password, email, NHSID, postcode) VALUES (%s,%s,%s,%s,%s)""", (data['username'], bcrypt.generate_password_hash(data['password']).decode('utf-8'), data['email'], data['NHSID'], data['postcode']))
-        cnx.commit()
+        return {"status": "FAILURE", "message": "Username already exists"}, 409
 
-        cursor.close()
-        print("created new user")
-        return {"status": "SUCCESS", "message": "test message"}
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    cursor.execute("""INSERT INTO Users (username, password, email, nhsID, postcode) VALUES (%s,%s,%s,%s,%s)""",
+                   (data['username'], hashed_password, data['email'], data['nhsID'], data['postcode']))
+    cnx.commit()
+    cursor.close()
 
-@app.route('/loginUser', methods = ["POST"])
+    # Mimic login by returning user's details except for the password
+    return {
+        "status": "SUCCESS",
+        "message": "User registered successfully",
+        "user": {
+            "username": data['username'],
+            "email": data['email'],
+            "nhsID": data['nhsID'],
+            "postcode": data['postcode']
+        }
+    }
+
+
+@app.route('/loginUser', methods=["POST"])
 @cross_origin()
 def loginUser():
     cursor = cnx.cursor(dictionary=True)
@@ -66,18 +68,19 @@ def loginUser():
 
     cursor.execute("SELECT * FROM Users WHERE username = %s", (data['username'],))
     result = cursor.fetchall()
-    print(result)
 
-    password_valid = bcrypt.check_password_hash(result[0]['password'], data['password'])
-    cursor.close()
+    if not result:
+        return {"status": "FAILURE", "message": "User not found"}, 404
+
+    user = result[0]
+    password_valid = bcrypt.check_password_hash(user['password'], data['password'])
 
     if password_valid:
-        print("valid password")
-        return {"status": "SUCCESS", "message": "test message"}
+        # Avoid sending the password back
+        user.pop('password', None)
+        return {"status": "SUCCESS", "message": "Login successful", **user}
     else:
-        print("incorrect password")
-        return {"status": "FAILURE", "message": "test message"}
-
+        return {"status": "FAILURE", "message": "Incorrect password"}, 401
 
 @app.route("/sendReport", methods=["POST"])
 @cross_origin()
@@ -85,23 +88,50 @@ def sendReport():
     cursor = cnx.cursor(dictionary=True)
     data = request.get_json()
 
-    cursor.execute("SELECT * FROM Diseases WHERE diseaseName = %s", (data["diseaseName"],))
-    result = cursor.fetchall()
-    print(result)
+    # Check if the disease is already in the database
+    cursor.execute("SELECT diseaseID FROM Diseases WHERE diseaseName = %s", (data["diseaseName"],))
+    disease = cursor.fetchone()
 
-    if len(result) > 0:
-        pass
-    else:        
-        cursor.execute(""" INSERT INTO Diseases (diseaseID) VALUES (%s) """, (data['diseaseName'], ))
+    if not disease:
+        # Add the new disease to the Diseases table
+        cursor.execute("INSERT INTO Diseases (diseaseName) VALUES (%s)", (data["diseaseName"],))
         cnx.commit()
-
-    cursor.execute(""" INSERT INTO UsersDiseased (userID, diseaseID) VALUES ((SELECT userID FROM Users WHERE username = %s),(SELECT diseaseID from Diseases WHERE diseaseName = %s))""", (data['username'], data["diseaseName"]))
+        diseaseID = cursor.lastrowid
+    else:
+        diseaseID = disease['diseaseID']
+    
+    # Fetch the userID using the username (assumed to be unique)
+    cursor.execute("SELECT userID FROM Users WHERE username = %s", (data["username"],))
+    user = cursor.fetchone()
+    if not user:
+        return {"status": "FAILURE", "message": "User not found"}, 404
+    
+    # Insert into UsersDiseased table
+    cursor.execute("INSERT INTO UsersDiseased (userID, diseaseID) VALUES (%s, %s)", (user['userID'], diseaseID))
     cnx.commit()
-
+    
     cursor.close()
-    print("user disease added")
-    return {"status": "SUCCESS", "message": "test message"}
+    return {"status": "SUCCESS", "message": "Disease reported successfully"}
+
+@app.route("/getDiseaseReports", methods=["GET"])
+@cross_origin()
+def getDiseaseReports():
+    cursor = cnx.cursor(dictionary=True)
+
+    # Assuming you have the necessary data relations and postcodes stored for each user
+    query = """
+    SELECT Diseases.diseaseName, Users.postcode 
+    FROM UsersDiseased
+    JOIN Users ON UsersDiseased.userID = Users.userID
+    JOIN Diseases ON UsersDiseased.diseaseID = Diseases.diseaseID
+    """
+    cursor.execute(query)
+    results = cursor.fetchall()
+    cursor.close()
+    
+    return {"status": "SUCCESS", "data": results}
 
 
 if __name__ == "__main__":
     app.run(debug = True, host = "localhost", port = os.getenv("REACT_APP_FLASK_PORT"))
+

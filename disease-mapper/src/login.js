@@ -1,45 +1,77 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import { usernameContext } from './App';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from "./index.js";
+import { UserContext } from './UserContext';
+import styles from './Login.module.css';
 
-const loginUser = async (username, password, navigate, setUsername) => {
+const Login = () => {
+  const { setUser } = useContext(UserContext);
+  const [loginDetails, setLoginDetails] = useState({
+    username: '',
+    password: '',
+  });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const response = await fetch('http://localhost:' + process.env.REACT_APP_FLASK_PORT + '/loginUser', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password})
-    });
-    const data = await response.json();
-    if (data.status === 'SUCCESS') {
-        alert("User logged in successfully");
-        navigate('/report'); // TODO: CHANGE BACK TO /home after fixing username transferred from home to report & back!
-    } else {
-        alert("User log in failed");
-        setUsername('');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginDetails((prevState) => ({ ...prevState, [name]: value }));
+    // Clear error message when user starts typing again
+    if (error) setError('');
+  };
+
+  const loginUser = async () => {
+    try {
+      const response = await fetch(
+        'http://localhost:' + process.env.REACT_APP_FLASK_PORT + '/loginUser',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginDetails),
+        }
+      );
+      const data = await response.json();
+      if (data.status === 'SUCCESS') {
+        setUser({
+          username: loginDetails.username,
+          email: data.email,
+          nhsID: data.nhsID,
+          postcode: data.postcode,
+        });
+        navigate('/home');
+      } else {
+        setError('Incorrect username or password');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setError('Login request failed. Please try again.');
     }
-    
-    return data;
-}
+  };
 
-function Login() {
-    const {username, setUsername} = useContext(usernameContext);
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    return (
-        <div className='App'>
-            <NavBar />
-            <br />
-            <div className='App' style={{ display: 'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'50vh'}}>
-                <h1> LOGIN </h1>
-                <input className='input' type='text' name='username' value={username} placeholder='Username:' color='white' onChange={e => setUsername(e.target.value)} required="required" />
-                <input className='input' type='password' name='password' value={password} placeholder='Password:' color='white' onChange={e => setPassword(e.target.value)} required="required" />
-                <button className='sendButton' onClick={() => loginUser(username, password, navigate, setUsername)} >Login</button>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className={styles.login}>
+      <h1>Login</h1>
+      {error && <div className={styles.errorMessage}>{error}</div>}
+      <input
+        className={styles.input}
+        type="text"
+        name="username"
+        value={loginDetails.username}
+        placeholder="Username"
+        onChange={handleChange}
+      />
+      <input
+        className={styles.input}
+        type="password"
+        name="password"
+        value={loginDetails.password}
+        placeholder="Password"
+        onChange={handleChange}
+      />
+      <button className={styles.button} onClick={loginUser}>
+        Login
+      </button>
+    </div>
+  );
+};
+
 export default Login;
