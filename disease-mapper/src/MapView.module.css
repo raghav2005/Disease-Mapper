@@ -1,5 +1,5 @@
 /* MapView.module.css */
 .mapContainer {
-  height: calc(100vh - 56px); /* NavBar height is 56px */
-  width: 100%;
+    height: calc(100vh - 56px); /* NavBar height is 56px */
+    width: 100%;
 }

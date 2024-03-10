@@ -10,21 +10,21 @@ import Login from './Login';
 import MapPage from './MapPage';
 
 const App = () => {
-  return (
-    <UserProvider>
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/report" element={<Report />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
-  );
+    return (
+        <UserProvider>
+            <BrowserRouter>
+                <NavBar />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/map" element={<MapPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/report" element={<Report />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
+            </BrowserRouter>
+        </UserProvider>
+    );
 };
 
 export default App;

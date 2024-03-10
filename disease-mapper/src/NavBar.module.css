@@ -1,20 +1,22 @@
 /* NavBar.module.css */
 .navbar {
-  background-color: #005f73;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    background-color: #3e3e3e;
+    padding: 20px;
+    font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
+    color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .brand,
 .link {
-  color: #f1faee;
-  text-decoration: none;
-  margin: 0 15px;
+    color: #f1faee;
+    text-decoration: none;
+    margin: 0 15px;
 }
 
 .link:hover,
 .brand:hover {
-  color: #e63946;
+    color: #e63946;
 }

@@ -1,0 +1,13 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    min-height: 100vh;
+    font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
+    color: whitesmoke;
+    background-repeat: no-repeat;
+    background-size: 25%;
+}
