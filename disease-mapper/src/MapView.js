@@ -3,6 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './MapView.module.css';
 
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
+
 const geocodePostcode = async (postcode) => {
     const apiKey = 'a91dccc858f4456c953c3474b683b77e';
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
@@ -84,7 +87,7 @@ const MapView = () => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {reports.map((report, index) => (
-                    <Marker
+                    <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
                         key={index}
                         position={[report.position.lat, report.position.lng]}
                     >

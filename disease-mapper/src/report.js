@@ -1,4 +1,3 @@
-// Report.js
 import React, { useState, useContext } from 'react';
 import { UserContext } from './UserContext';
 import styles from './Report.module.css';
@@ -6,10 +5,16 @@ import styles from './Report.module.css';
 const Report = () => {
     const { user } = useContext(UserContext);
     const [disease, setDisease] = useState('');
+    const [error, setError] = useState('');
 
     const sendReport = async () => {
         if (!user) {
             alert('Please log in to send a report.');
+            return;
+        }
+        
+        if (!disease.trim()) {
+            setError('Please enter a disease name.');
             return;
         }
 
@@ -42,15 +47,21 @@ const Report = () => {
     };
 
     return (
-        <div className={[styles.report]}>
+        <div className={styles.report}>
             <h1>Report Disease</h1>
+            <label htmlFor="diseaseInput" className={styles.inputLabel}>Disease Name</label>
             <input
-                className={styles.input}
+                id="diseaseInput"
+                className={`${styles.input} ${error ? styles.inputError : ''}`}
                 type="text"
                 value={disease}
-                placeholder="Disease Name"
-                onChange={(e) => setDisease(e.target.value)}
+                placeholder=""
+                onChange={(e) => {
+                    setDisease(e.target.value);
+                    setError(''); // Clear error on change
+                }}
             />
+            {error && <div className={styles.errorMessage}>{error}</div>}
             <button className={styles.button} onClick={sendReport}>
                 Send Disease Report
             </button>
