@@ -1,53 +1,58 @@
 /* Register.module.css */
 .register {
-    display: flex;
-    flex-direction: column;
-    background-color: #f0f2f5; /* Lighter background for a modern look */
-    color: #333; /* Dark gray text for better readability */
-    align-items: center;
-    font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
-    justify-content: center;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5; /* Lighter background for a modern look */
+  color: #333; /* Dark gray text for better readability */
+  align-items: center;
+  font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .inputContainer {
-    margin-bottom: 20px; /* Increase spacing between fields */
-    margin-right: auto;
-    padding-left: 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Full width to container */
+  max-width: 320px; /* Maximum width for the inputs */
+  margin: 10px 0; /* Consistent margin for spacing */
 }
 
 .input {
-    width: 100%; /* Full width inputs */
-    margin-top: 8px; /* Space between label and input */
-    padding: 12px 15px; /* Increased padding for a larger click area */
-    border: 1px solid #ccc; /* Subtle border */
-    border-radius: 8px; /* Rounded corners for inputs */
-    box-sizing: border-box; /* Correct box sizing */
+  width: 100%; /* Full width inputs */
+  margin-top: 8px; /* Space between label and input */
+  padding: 12px 15px; /* Increased padding for a larger click area */
+  border: 1px solid #ccc; /* Subtle border */
+  border-radius: 8px; /* Rounded corners for inputs */
+  box-sizing: border-box; /* Correct box sizing */
 }
 
 .button {
-    background-color: #007bff; /* Vibrant button color */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px; /* Rounded corners for the button */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for button interaction */
-    font-weight: bold; /* Bold font for the button */
+  background-color: #007bff; /* Vibrant button color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* Rounded corners for the button */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for button interaction */
+  font-weight: bold; /* Bold font for the button */
 }
 
 .button:hover {
-    background-color: #0056b3; /* Darker shade on hover for interaction feedback */
+  background-color: #0056b3; /* Darker shade on hover for interaction feedback */
 }
 
 .inputError {
-    border-color: red; /* Highlights the border in red if there's an error */
+  border-color: red; /* Highlights the border in red if there's an error */
 }
 
 /* Placeholder color for error messages */
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-    opacity: 1; /* Firefox */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+  opacity: 1; /* Firefox */
 }

@@ -1,0 +1,70 @@
+/* Adjusted from previous CSS to include styles for ProjectConcept section */
+
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.Header {
+  background-color: #282c34;
+  padding: 40px;
+  color: white;
+}
+
+.ProjectConcept {
+  margin: 40px auto;
+  max-width: 800px;
+  text-align: left; /* Align text to the left for better readability in paragraphs */
+}
+
+.ProjectConcept h2 {
+  color: #007bff;
+}
+
+.ProjectConcept p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6; /* Increase line height for better readability */
+  margin-bottom: 20px; /* Add space between paragraphs */
+}
+
+.TeamSection {
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.TeamMembers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.TeamMemberCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.TeamMemberCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+h3 {
+  margin: 0;
+  color: #007bff;
+}
+
+p {
+  font-size: 14px;
+  color: #666;
+}
