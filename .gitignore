@@ -49,3 +49,4 @@ disease-mapper/node_modules/
 venv/
 
 .env
+nodevenv/

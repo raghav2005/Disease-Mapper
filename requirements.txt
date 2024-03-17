@@ -1,7 +1,9 @@
 aniso8601==9.0.1
+bcrypt==4.1.2
 blinker==1.7.0
 click==8.1.7
 Flask==3.0.2
+Flask-Bcrypt==1.0.1
 Flask-Cors==4.0.0
 Flask-MySQLdb==2.0.0
 Flask-RESTful==0.3.10
@@ -12,6 +14,7 @@ MarkupSafe==2.1.5
 mysql==0.0.3
 mysql-connector-python-rf==2.2.2
 mysqlclient==2.2.4
+nodeenv==1.8.0
 python-dotenv==1.0.1
 pytz==2024.1
 six==1.16.0
